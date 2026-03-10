@@ -49,9 +49,18 @@ form.addEventListener('submit', async event => {
 
         if (totalHits > perPage) {
             showLoadMoreButton();
+        } else {
+            iziToast.info({
+                message: "We're sorry, but you've reached the end of search results.",
+                position: "topRight"
+            });
         }
 
     } catch (error) {
+        iziToast.error({
+            message: "Something went wrong. Please try again.",
+            position: "topRight"
+        });
         console.log(error);
     } finally {
         hideLoader();
@@ -61,6 +70,7 @@ form.addEventListener('submit', async event => {
 loadMoreBtn.addEventListener('click', async () => {
     page += 1;
 
+    hideLoadMoreButton(); // ховаємо кнопку
     showLoader();
 
     try {
@@ -77,21 +87,24 @@ loadMoreBtn.addEventListener('click', async () => {
                 message: "We're sorry, but you've reached the end of search results.",
                 position: "topRight"
             });
+        } else {
+            showLoadMoreButton(); // ← повертаємо кнопку
         }
 
-        const card = document.querySelector('.gallery-item');
-        const gallery = document.querySelector('.gallery');
-
+        const card = document.querySelector('.gallery-item');        
         const cardHeight = card.getBoundingClientRect().height;
-        const gap = 24;
-        const info = 60;
+        
 
         window.scrollBy({
-            top: (cardHeight + gap + info) * 2,
+            top: cardHeight * 2,
             behavior: "smooth",
         });
 
     } catch (error) {
+        iziToast.error({
+            message: "Something went wrong. Please try again.",
+            position: "topRight"
+        });
         console.log(error);
     } finally {
         hideLoader();
