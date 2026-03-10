@@ -9,8 +9,8 @@ import {
     hideLoader,
     showLoadMoreButton,
     hideLoadMoreButton,
-} from "./js/render-function";
- 
+} from "./js/render-functions";
+
 const form = document.querySelector('.form');
 const loadMoreBtn = document.querySelector('.load-more');
 
